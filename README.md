@@ -1,7 +1,7 @@
 # homebrew-nexa
 Homebrew  formula for nexa sdk
 
-repo url: https://github.com/NexaAI/nexasdk-go.git
+repo url: https://github.com/zhiyuan8/homebrew-go-release.git
 
 ## Install
 
