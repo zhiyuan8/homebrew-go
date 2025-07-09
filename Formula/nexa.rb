@@ -13,17 +13,17 @@ class Nexa < Formula
     on_intel do
       # This OS/Arch only supports the Llama-cpp-metal backend
       url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.1.1/nexa-cli-macos-13-llama-cpp-metal-v0.1.1.tar.gz"
-      sha256 "9d3142cc249c03e62462f666257673f71e66fabb76efbecaad1d0b9dad96f6c2"
+      sha256 "860c38cd389c66ab77098a3edf124512e3fa2ff55a813077f2c1e8ed62816096"
     end
   end
   on_sonoma do
     on_arm do
       if build.with? "mlx"
         url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.1.1/nexa-cli-macos-14-mlx-v0.1.1.tar.gz"
-        sha256 "8d99de2ddd45b837affd15c7b3692e6a5ab7f26211e9b97372ed00fb6c4ac333"
+        sha256 "47a3388eeb3d7299f0321c4ddcf7d7c35e80358661515221da1d3a594862b93c"
       else
         url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.1.1/nexa-cli-macos-14-llama-cpp-metal-v0.1.1.tar.gz"
-        sha256 "51d21f83e7eaf5a0826cd051f6b8355ce4174829b5d1c97053c6d9977818058d"
+        sha256 "276485f0341ea82e4d3589a19bec02ec1d90f1e79596c1eec904b49a19e3ad08"
       end
     end
   end
@@ -31,10 +31,10 @@ class Nexa < Formula
     on_arm do
       if build.with? "mlx"
         url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.1.1/nexa-cli-macos-15-mlx-v0.1.1.tar.gz"
-        sha256 "94ea684753e371c2da8b0912b486d382d158c619567e3ef5bacaf9d53773b8d0"
+        sha256 "61f28c9ad776f3124340d18213d0112fcd676af9f735bee58d14f163090858fb"
       else
         url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.1.1/nexa-cli-macos-15-llama-cpp-metal-v0.1.1.tar.gz"
-        sha256 "c5eeb01044398d11a047828ceeecfc87d9a29c972ecfb4aac4203de962fc458a"
+        sha256 "fda807b1024a88684fc0da9ad89f14b195fabda534b45178c82bf880f978ed4d"
       end
     end
   end
