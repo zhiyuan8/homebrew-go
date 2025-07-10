@@ -4,7 +4,7 @@
 class Nexa < Formula
   desc "A powerful CLI for the NexaAI ecosystem"
   homepage "https://github.com/zhiyuan8/homebrew-go-release"
-  version "0.2.4"
+  version "0.2.5"
   license "MIT"
 
   option "with-mlx", "Install with the MLX backend instead of the default Llama-cpp-metal backend"
@@ -12,29 +12,29 @@ class Nexa < Formula
   on_ventura do
     on_intel do
       # This OS/Arch only supports the Llama-cpp-metal backend
-      url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.4/nexa-cli-macos-13-llama-cpp-metal-v0.2.4.tar.gz"
-      sha256 "ffeb0387a10b50739d7ce67fc389a8e9cd9a4c17715975da37a418e6ace29853"
+      url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.5/nexa-cli-macos-13-llama-cpp-metal-v0.2.5.tar.gz"
+      sha256 "46df5fb0bf69dbc7e84aedd0f89354afdcd7874877dd0e75cc19f1d272070031"
     end
   end
   on_sonoma do
     on_arm do
       if build.with? "mlx"
-        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.4/nexa-cli-macos-14-mlx-v0.2.4.tar.gz"
-        sha256 "e014585dbc0a37ef99a746f239ed6978b4e10ec0b5a93994c924c687ef08f77c"
+        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.5/nexa-cli-macos-14-mlx-v0.2.5.tar.gz"
+        sha256 "3d37a74ddc1911fa967a3fa617906d8b4ea012a97820172b5771511d91852670"
       else
-        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.4/nexa-cli-macos-14-llama-cpp-metal-v0.2.4.tar.gz"
-        sha256 "5f08d9e02aa2936aa409f056a8362d1c3deef0dda6474097afdb5cf74dc2a9c3"
+        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.5/nexa-cli-macos-14-llama-cpp-metal-v0.2.5.tar.gz"
+        sha256 "7af5225291330a06664f12d8d055ae8e5d16a3933fd2977ecb8c9854850600cb"
       end
     end
   end
   on_sequoia do
     on_arm do
       if build.with? "mlx"
-        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.4/nexa-cli-macos-15-mlx-v0.2.4.tar.gz"
-        sha256 "7ea28d10e19a0d91f4d714d4f7e14114398ef9ef96ac00966df51e788a89a686"
+        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.5/nexa-cli-macos-15-mlx-v0.2.5.tar.gz"
+        sha256 "ffb583183f9745d351c0324450855b4089c0255d5d7b93df22d40f09dc0db7c5"
       else
-        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.4/nexa-cli-macos-15-llama-cpp-metal-v0.2.4.tar.gz"
-        sha256 "c458382a63813406430a697ad0fc26e2cd4057fc8f6a6483bc74ee4395ab2477"
+        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v0.2.5/nexa-cli-macos-15-llama-cpp-metal-v0.2.5.tar.gz"
+        sha256 "2423bab2327659afa72a43653e4272f3be6b4d854de20c3ae58b6e418129ab8b"
       end
     end
   end
@@ -46,6 +46,7 @@ def install
 
     chmod "+x", libexec/"nexa"
     chmod "+x", libexec/"nexa-cli"
+    chmod -R "+x", libexec/"lib"
 
     (bin/"nexa").write <<~EOS
       #!/bin/bash
