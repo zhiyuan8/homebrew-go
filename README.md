@@ -7,5 +7,5 @@ repo url: https://github.com/zhiyuan8/homebrew-go-release.git
 
 ```bash
 brew tap zhiyuan8/go
-brew install nexa            # install the default backend, llama-cpp
-brew install nexa --with-mlx # install mlx as the backend
+brew install nexa     # install nexa-cli
+```

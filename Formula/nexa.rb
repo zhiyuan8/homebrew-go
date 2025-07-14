@@ -1,52 +1,47 @@
+# typed: false
+# frozen_string_literal: true
+
+require "json"
+
 class Nexa < Formula
   desc "A powerful CLI for the NexaAI ecosystem"
   homepage "https://github.com/zhiyuan8/homebrew-go-release"
   license "MIT"
-  version "0.1.0"
 
-  option "with-mlx", "Install with the MLX backend instead of the default llama-cpp-metal backend"
+  MANIFEST_PATH = Pathname.new(__dir__)/"../manifest.json"
+  odie "Manifest file not found at #{MANIFEST_PATH}" unless MANIFEST_PATH.exist?
+  MANIFEST = JSON.parse(MANIFEST_PATH.read)
 
-  on_macos do
-    if MacOS.version == :ventura
-      if Hardware::CPU.intel?
-        url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/#{version}/nexa-cli_macos-13_llama-cpp-metal.tar.gz"
-        sha256 "initial_sha256_hash_here" #<--sha256_macos-13_llama-cpp-metal#
-      else
-        odie "Nexa-CLI only supports Intel on macOS 13 (Ventura)"
-      end
-    end
+  version MANIFEST["version"]
 
-    if MacOS.version == :sonoma
-      if Hardware::CPU.arm?
-        if build.with?("mlx")
-          url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/#{version}/nexa-cli_macos-14_mlx.tar.gz"
-          sha256 "initial_sha256_hash_here" #<--sha256_macos-14_mlx#
-        else
-          url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/#{version}/nexa-cli_macos-14_llama-cpp-metal.tar.gz"
-          sha256 "initial_sha256_hash_here" #<--sha256_macos-14_llama-cpp-metal#
-        end
-      elsif system("sysctl -n sysctl.proc_translated 2>/dev/null").to_i == 1
-        odie "Nexa-CLI does not support running under Rosetta on macOS 14 (Sonoma)."
-      else
-        odie "Nexa-CLI only supports Apple Silicon on macOS 14 (Sonoma)"
-      end
-    end
+  os_key = if MacOS.version >= :sequoia
+             "sequoia_and_later"
+           else
+             MacOS.version.to_s
+           end
 
-    if MacOS.version >= :sequoia
-      if Hardware::CPU.arm?
-        if build.with?("mlx")
-          url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/#{version}/nexa-cli_macos-15_mlx.tar.gz"
-          sha256 "initial_sha256_hash_here" #<--sha256_macos-15_mlx#
-        else
-          url "https://github.com/zhiyuan8/homebrew-go-release/releases/download/#{version}/nexa-cli_macos-15_llama-cpp-metal.tar.gz"
-          sha256 "initial_sha256_hash_here" #<--sha256_macos-15_llama-cpp-metal#
-        end
-      elsif system("sysctl -n sysctl.proc_translated 2>/dev/null").to_i == 1
-        odie "Nexa-CLI does not support running under Rosetta on macOS 15 (Sequoia) and later."
-      else
-        odie "Nexa-CLI only supports Apple Silicon on macOS 15 (Sequoia) and later."
-      end
-    end
+  cpu_key = Hardware::CPU.arch_64_bit.to_s
+
+  if OS.mac? && MacOS.version >= :sonoma
+    is_rosetta = system("sysctl -n sysctl.proc_translated 2>/dev/null").to_i == 1
+    odie "Nexa-CLI does not support running under Rosetta on macOS #{MacOS.version} and later." if is_rosetta
+  end
+
+  platform_info = MANIFEST["platforms"].dig(os_key, cpu_key)
+
+  if platform_info
+    url_template = MANIFEST["url_template"]
+    artifact_name = platform_info["artifact_name"]
+
+    url url_template.gsub("{version}", version.to_s).gsub("{artifact_name}", artifact_name)
+    sha256 platform_info["sha256"]
+  else
+    odie <<~EOS
+      Your system configuration is not supported by this version of Nexa-CLI.
+      OS: #{os_key}
+      CPU: #{cpu_key}
+      Please check the formula for supported combinations or open an issue.
+    EOS
   end
 
   def install
@@ -58,18 +53,18 @@ class Nexa < Formula
     chmod "+x", bin/"nexa-cli"
     (libexec/"lib/python_runtime/bin").glob("**/*").each { |f| f.chmod(0755) if f.file? }
 
-    (bin/"nexa").write <<~EOS
-      #!/bin/bash
-      export DYLD_LIBRARY_PATH="#{libexec}/lib"
-      exec "#{libexec}/nexa" "$@"
-    EOS
+  #   (bin/"nexa").write <<~EOS
+  #     #!/bin/bash
+  #     export DYLD_LIBRARY_PATH="#{libexec}/lib"
+  #     exec "#{libexec}/nexa" "$@"
+  #   EOS
 
-    (bin/"nexa-cli").write <<~EOS
-      #!/bin/bash
-      export DYLD_LIBRARY_PATH="#{libexec}/lib"
-      exec "#{libexec}/nexa-cli" "$@"
-    EOS
-  end
+  #   (bin/"nexa-cli").write <<~EOS
+  #     #!/bin/bash
+  #     export DYLD_LIBRARY_PATH="#{libexec}/lib"
+  #     exec "#{libexec}/nexa-cli" "$@"
+  #   EOS
+  # end
 
   test do
     assert_match "version", shell_output("#{bin}/nexa --version")
