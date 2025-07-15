@@ -49,13 +49,13 @@ class Nexa < Formula
     bin.install "nexa"
     bin.install "nexa-cli"
 
-    libexec.install "mlx"
-    libexec.install "llama-cpp-metal"
+    lib.install "lib/mlx"
+    lib.install "lib/llama-cpp-metal"
 
     # Set permissions
     # chmod "+x", bin/"nexa"
     # chmod "+x", bin/"nexa-cli"
-    (libexec/"mlx/python_runtime/bin").glob("**/*").each { |f| f.chmod(0755) if f.file? }
+    (lib/"mlx/python_runtime/bin").glob("**/*").each { |f| f.chmod(0755) if f.file? }
 
     # (bin/"nexa").write <<~EOS
     #   #!/bin/bash
