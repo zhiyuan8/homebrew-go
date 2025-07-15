@@ -23,7 +23,8 @@ class Nexa < Formula
   cpu_key = Hardware::CPU.arch_64_bit.to_s
 
   if OS.mac? && MacOS.version >= :sonoma
-    is_rosetta = system("sysctl -n sysctl.proc_translated 2>/dev/null").to_i == 1
+    # is_rosetta = `sysctl -n sysctl.proc_translated 2>/dev/null`.strip.to_i == 1
+    is_rosetta = Hardware::CPU.in_rosetta2?
     odie "Nexa-CLI does not support running under Rosetta on macOS #{MacOS.version} and later." if is_rosetta
   end
 
@@ -47,24 +48,27 @@ class Nexa < Formula
   def install
     bin.install "nexa"
     bin.install "nexa-cli"
-    libexec.install "lib"
 
-    chmod "+x", bin/"nexa"
-    chmod "+x", bin/"nexa-cli"
-    (libexec/"lib/python_runtime/bin").glob("**/*").each { |f| f.chmod(0755) if f.file? }
+    libexec.install "mlx"
+    libexec.install "llama-cpp-metal"
 
-  #   (bin/"nexa").write <<~EOS
-  #     #!/bin/bash
-  #     export DYLD_LIBRARY_PATH="#{libexec}/lib"
-  #     exec "#{libexec}/nexa" "$@"
-  #   EOS
+    # Set permissions
+    # chmod "+x", bin/"nexa"
+    # chmod "+x", bin/"nexa-cli"
+    (libexec/"mlx/python_runtime/bin").glob("**/*").each { |f| f.chmod(0755) if f.file? }
 
-  #   (bin/"nexa-cli").write <<~EOS
-  #     #!/bin/bash
-  #     export DYLD_LIBRARY_PATH="#{libexec}/lib"
-  #     exec "#{libexec}/nexa-cli" "$@"
-  #   EOS
-  # end
+    # (bin/"nexa").write <<~EOS
+    #   #!/bin/bash
+    #   export DYLD_LIBRARY_PATH="#{libexec}/lib"
+    #   exec "#{libexec}/nexa" "$@"
+    # EOS
+
+    # (bin/"nexa-cli").write <<~EOS
+    #   #!/bin/bash
+    #   export DYLD_LIBRARY_PATH="#{libexec}/lib"
+    #   exec "#{libexec}/nexa-cli" "$@"
+    # EOS
+  end
 
   test do
     assert_match "version", shell_output("#{bin}/nexa --version")
