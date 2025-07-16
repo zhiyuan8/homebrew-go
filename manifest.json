@@ -1,23 +1,23 @@
 {
-  "version": "0.2.12",
+  "version": "0.2.13-rc1",
   "url_template": "https://github.com/zhiyuan8/homebrew-go-release/releases/download/v{version}/{artifact_name}_v{version}.tar.gz",
   "platforms": {
     "ventura": {
       "x86_64": {
         "artifact_name": "nexa-cli_macos-13",
-        "sha256": "9043f936d4780937ed03f1caafc581565a63c9487854a1c2a6b0d84ccdf585d1"
+        "sha256": "448d0862a015a74c03d49b2ceb8664bdbba87907217beaacdb857ffa351912c4"
       }
     },
     "sonoma": {
       "arm64": {
         "artifact_name": "nexa-cli_macos-14",
-        "sha256": "b4c2de4d8df3aaaaea0ef98d71093dabc21b239678e5a6d281f73bd4a7945d1d"
+        "sha256": "d49fb073ff17a6c9e5629e500ce91a6a7e379d01195b8fc4e13449ab8d7afe79"
       }
     },
     "sequoia_and_later": {
       "arm64": {
         "artifact_name": "nexa-cli_macos-15",
-        "sha256": "365bb618a97b5b2b9ac6597b83fab3bf8c01854737b9293a182f8e5d5fcfe49a"
+        "sha256": "d00a9c844ddf7eb0aadc8ec477eda2c26599774b56fa58c0651f61cb9ea97452"
       }
     }
   }
