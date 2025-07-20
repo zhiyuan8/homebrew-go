@@ -5,19 +5,19 @@
     "ventura": {
       "x86_64": {
         "artifact_name": "nexa-cli_macos-13",
-        "sha256": "528ed55fe3a2fc8830dadfd810141ece1112965c036cbc97fe6d29a52c899aa9"
+        "sha256": "ebe7228c1366360c16e5fcf6380e7d0ec4c0e97acb4b6a6ab89ce40290e8f623"
       }
     },
     "sonoma": {
       "arm64": {
         "artifact_name": "nexa-cli_macos-14",
-        "sha256": "5434713db0113e0413bd74dbc2b6a383f65e7d7a1ce53bb1030ab54cbaaebd97"
+        "sha256": "774ed1a216f2dc74fea1a077b805797afda90d35130a67624d1fd61fe669f8ff"
       }
     },
     "sequoia_and_later": {
       "arm64": {
         "artifact_name": "nexa-cli_macos-15",
-        "sha256": "064848d6080e013b22e1f6b80bdddb0923259cfa6185afb5f3624bcde48e1ea5"
+        "sha256": "023f57e3b5066c6cf69db362c6806b37071cf66bb3fdca9a5c732c01be58b65f"
       }
     }
   }
